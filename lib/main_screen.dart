@@ -60,16 +60,18 @@ class _MainScreenState extends State<MainScreen> {
     Timer.periodic(Duration(milliseconds: 200), (timer) {
       setState(() {
         moveSnake();
-//Game Over scenario
+        //Game Over scenario
         if (gameOver()) {
           timer.cancel();
 
           showDialog(
               context: context,
+              barrierDismissible: true,
               builder: (context) {
                 return AlertDialog(
                   title: Text('Game Over'),
                   content: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       Text('Your Score is $currentScore'),
                       TextField(
@@ -92,7 +94,9 @@ class _MainScreenState extends State<MainScreen> {
                     ),
                   ],
                 );
-              });
+              }).then((value) {
+            newGame();
+          });
         }
       });
     });
