@@ -21,7 +21,7 @@ class _MainScreenState extends State<MainScreen> {
   final gridColumns = 15;
   final gridPixels = 225;
   List snakePosition = [5, 20, 35];
-  int foodPosition = 88;
+  int foodPosition = 89;
   int currentScore = 0;
   int speed = 200;
   var currentDirection = SnakeDirection.DOWN;
@@ -59,11 +59,11 @@ class _MainScreenState extends State<MainScreen> {
 
   void increaseSpeed() {
     setState(() {
-      if (currentScore == 20) {
-        speed = 150;
+      if (currentScore == 25) {
+        speed = 160;
         resetGameTimer();
-      } else if (currentScore == 50) {
-        speed = 100;
+      } else if (currentScore == 55) {
+        speed = 120;
         resetGameTimer();
       }
     });
@@ -156,7 +156,7 @@ class _MainScreenState extends State<MainScreen> {
     setState(() {
       //docsID = [];
       snakePosition = [5, 20, 35];
-      foodPosition = 88;
+      foodPosition = 98;
       currentScore = 0;
       speed = 200;
       currentDirection = SnakeDirection.DOWN;
