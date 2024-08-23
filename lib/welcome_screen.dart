@@ -38,41 +38,43 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GestureDetector(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => MainScreen()),
-          );
-        },
-        child: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Lottie.asset(
-                'asset/Animation.json',
-                controller: _controller,
-                height: 220,
-                width: 220,
-                fit: BoxFit.fill,
-                onLoaded: (composition) {
-                  _controller.duration = composition.duration;
-                },
-              ),
-              SizedBox(
-                height: 35,
-              ),
-              Text(
-                'Tap anywhere to continue...',
-                style: TextStyle(fontSize: 20, color: Colors.blueGrey),
-              )
-                  .animate(onComplete: (contr) => contr.repeat())
-                  .fade(duration: 3.seconds)
-                  .then(delay: 500.ms)
-                  .fadeOut(duration: 1.seconds),
-            ],
+      body: Center(
+        child: GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MainScreen()),
+            );
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Lottie.asset(
+                  'asset/Animation.json',
+                  controller: _controller,
+                  height: 220,
+                  width: 220,
+                  fit: BoxFit.fill,
+                  onLoaded: (composition) {
+                    _controller.duration = composition.duration;
+                  },
+                ),
+                SizedBox(
+                  height: 35,
+                ),
+                Text(
+                  'Tap anywhere to continue...',
+                  style: TextStyle(fontSize: 20, color: Colors.blueGrey),
+                )
+                    .animate(onComplete: (contr) => contr.repeat())
+                    .fade(duration: 3.seconds)
+                    .then(delay: 500.ms)
+                    .fadeOut(duration: 1.seconds),
+              ],
+            ),
           ),
         ),
       ),
