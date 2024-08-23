@@ -18,9 +18,9 @@ class MainScreen extends StatefulWidget {
 enum SnakeDirection { UP, RIGHT, DOWN, LEFT }
 
 class _MainScreenState extends State<MainScreen> {
-  final gridColumns = 10;
-  final gridPixels = 100;
-  List snakePosition = [5, 15, 25];
+  final gridColumns = 15;
+  final gridPixels = 225;
+  List snakePosition = [5, 20, 35];
   int foodPosition = 58;
   int currentScore = 0;
   var currentDirection = SnakeDirection.DOWN;
@@ -106,7 +106,7 @@ class _MainScreenState extends State<MainScreen> {
     //reset the game state
     setState(() {
       //docsID = [];
-      snakePosition = [5, 15, 25];
+      snakePosition = [5, 20, 35];
       foodPosition = 58;
       currentScore = 0;
       currentDirection = SnakeDirection.DOWN;
@@ -126,7 +126,7 @@ class _MainScreenState extends State<MainScreen> {
           snakePosition.add(snakePosition.last - gridColumns);
         break;
       case SnakeDirection.RIGHT:
-        if (snakePosition.last % gridColumns == 9)
+        if (snakePosition.last % gridColumns == gridColumns - 1)
           //add a new head
           snakePosition.add(snakePosition.last + 1 - gridColumns);
         else
@@ -227,19 +227,19 @@ class _MainScreenState extends State<MainScreen> {
                           ),
                           isStarted
                               ? Container()
-                              : FutureBuilder(
-                                  future: getDocID(),
-                                  builder: (BuildContext context,
-                                      AsyncSnapshot<dynamic> snapshot) {
-                                    return Expanded(
-                                      child: ListView.builder(
+                              : Expanded(
+                                  child: FutureBuilder(
+                                    future: getDocID(),
+                                    builder: (BuildContext context,
+                                        AsyncSnapshot<dynamic> snapshot) {
+                                      return ListView.builder(
                                         itemCount: docsID.length,
                                         itemBuilder: (context, index) {
                                           return HighScoreTile(docsID[index]);
                                         },
-                                      ),
-                                    );
-                                  },
+                                      );
+                                    },
+                                  ),
                                 ),
                         ],
                       ),
@@ -267,23 +267,26 @@ class _MainScreenState extends State<MainScreen> {
                         currentDirection != SnakeDirection.RIGHT)
                       currentDirection = SnakeDirection.LEFT;
                   },
-                  child: GridView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    padding: EdgeInsets.zero,
-                    itemCount: gridPixels,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: gridColumns),
-                    itemBuilder: (build, index) {
-                      if (snakePosition.contains(index))
-                        return BoardTile(
-                          Colors.white,
-                        );
-                      else if (foodPosition == index)
-                        return BoardTile(Colors.green);
-                      else
-                        return BoardTile(Colors.grey[900]!);
-                    },
+                  child: AspectRatio(
+                    aspectRatio: gridColumns /
+                        (gridPixels /
+                            gridColumns), // Aspect ratio based on grid dimensions
+                    child: GridView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      padding: EdgeInsets.zero,
+                      itemCount: gridPixels,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: gridColumns),
+                      itemBuilder: (build, index) {
+                        if (snakePosition.contains(index))
+                          return BoardTile(Colors.white);
+                        else if (foodPosition == index)
+                          return BoardTile(Colors.green);
+                        else
+                          return BoardTile(Colors.grey[900]!);
+                      },
+                    ),
                   ),
                 ),
               ),
